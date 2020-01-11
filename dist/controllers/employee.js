@@ -19,6 +19,8 @@ var _employee = _interopRequireDefault(require("../../models/employee"));
 
 var _mailer = _interopRequireDefault(require("../mailer/mailer"));
 
+var _authentification = require("./authentification");
+
 var EmployeeController =
 /*#__PURE__*/
 function () {

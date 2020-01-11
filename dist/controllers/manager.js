@@ -29,6 +29,8 @@ var _mailer = _interopRequireDefault(require("../mailer/mailer"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
+var _validation = require("./validator/validation");
+
 var ManagerController =
 /*#__PURE__*/
 function () {
@@ -42,21 +44,34 @@ function () {
       var _register = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee(req, res) {
-        var exist, email_exist, id_exist, salt, hashedPassword, manager, mailOption, saved_data;
+        var _registerValidation, error, exist, email_exist, id_exist, salt, hashedPassword, manager, mailOption, saved_data;
+
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _registerValidation = (0, _validation.registerValidation)(req.body), error = _registerValidation.error;
+
+                if (!error) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return", res.status(400).json({
+                  msg: error.details[0].message
+                }));
+
+              case 3:
+                _context.next = 5;
                 return _manager["default"].findOne({
                   employeeName: req.body.employeeName
                 });
 
-              case 2:
+              case 5:
                 exist = _context.sent;
 
                 if (!exist) {
-                  _context.next = 5;
+                  _context.next = 8;
                   break;
                 }
 
@@ -64,17 +79,17 @@ function () {
                   msg: "you already have an account as manager, login instead"
                 }));
 
-              case 5:
-                _context.next = 7;
+              case 8:
+                _context.next = 10;
                 return _manager["default"].findOne({
                   email: req.body.email
                 });
 
-              case 7:
+              case 10:
                 email_exist = _context.sent;
 
                 if (!email_exist) {
-                  _context.next = 10;
+                  _context.next = 13;
                   break;
                 }
 
@@ -82,17 +97,17 @@ function () {
                   msg: "your email already used by onother manager"
                 }));
 
-              case 10:
-                _context.next = 12;
+              case 13:
+                _context.next = 15;
                 return _manager["default"].findOne({
                   idNumber: req.body.idNumber
                 });
 
-              case 12:
+              case 15:
                 id_exist = _context.sent;
 
                 if (!id_exist) {
-                  _context.next = 15;
+                  _context.next = 18;
                   break;
                 }
 
@@ -100,16 +115,16 @@ function () {
                   msg: "you are using an already used id number"
                 }));
 
-              case 15:
-                _context.next = 17;
+              case 18:
+                _context.next = 20;
                 return _bcryptjs["default"].genSalt(10);
 
-              case 17:
+              case 20:
                 salt = _context.sent;
-                _context.next = 20;
+                _context.next = 23;
                 return _bcryptjs["default"].hash(req.body.password, salt);
 
-              case 20:
+              case 23:
                 hashedPassword = _context.sent;
                 //instantiating db_data to be submitted;
                 manager = new _manager["default"]({
@@ -134,27 +149,27 @@ function () {
                   console.log(info);
                 });
 
-                _context.prev = 24;
-                _context.next = 27;
+                _context.prev = 27;
+                _context.next = 30;
                 return manager.save();
 
-              case 27:
+              case 30:
                 saved_data = _context.sent;
                 res.json(saved_data);
-                _context.next = 34;
+                _context.next = 37;
                 break;
 
-              case 31:
-                _context.prev = 31;
-                _context.t0 = _context["catch"](24);
+              case 34:
+                _context.prev = 34;
+                _context.t0 = _context["catch"](27);
                 res.json(console.log(_context.t0));
 
-              case 34:
+              case 37:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[24, 31]]);
+        }, _callee, null, [[27, 34]]);
       }));
 
       function register(_x, _x2) {

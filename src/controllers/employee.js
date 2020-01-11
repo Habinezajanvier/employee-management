@@ -1,5 +1,6 @@
 import Employee from '../../models/employee';
 import transporter from '../mailer/mailer';
+import { auth } from './authentification';
 
 class EmployeeController {
     static async addEmployee (req, res) {

@@ -4,10 +4,10 @@ employee management is web application that help a manager to manage employee he
 
 ## build with
 
-*node.js
-*epress
-*javascript
-*mongodb
+* node.js
+* epress
+* javascript
+* mongodb
 
 ## getting started 
 
