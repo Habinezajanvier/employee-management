@@ -52,7 +52,7 @@ class EmployeeController {
         });
 
         const mailOption = {
-            from: process.env.EMAIL,
+            from: '"COMPANY X" <habinezajan@gmail.com>',
             to: req.body.email,
             subject: "notification email",
             text: 'this an email to notify about your employement',

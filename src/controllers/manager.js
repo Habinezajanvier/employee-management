@@ -39,7 +39,7 @@ class ManagerController {
         //sending email for confirmation
         
         const mailOption = {
-            from: process.env.EMAIL,
+            from: '"COMPANY X" <habinezajan@gmail.com>',
             to: req.body.email,
             subject: "registration verification",
             text: 'here is the email to verify your registration',

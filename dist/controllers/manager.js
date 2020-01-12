@@ -123,7 +123,7 @@ function () {
                 }); //sending email for confirmation
 
                 mailOption = {
-                  from: process.env.EMAIL,
+                  from: '"COMPANY X" <habinezajan@gmail.com>',
                   to: req.body.email,
                   subject: "registration verification",
                   text: 'here is the email to verify your registration'
