@@ -19,8 +19,6 @@ var _employee = _interopRequireDefault(require("../../models/employee"));
 
 var _mailer = _interopRequireDefault(require("../mailer/mailer"));
 
-var _authentification = require("./authentification");
-
 var EmployeeController =
 /*#__PURE__*/
 function () {
@@ -34,7 +32,7 @@ function () {
       var _addEmployee = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee2(req, res) {
-        var existed_employee, employee, mailOption;
+        var existed_employee, existed_email, existed_id, existed_number, year, month, date, d, today, birthDate, checkNumber, employee, mailOption;
         return _regenerator["default"].wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -52,25 +50,112 @@ function () {
                   break;
                 }
 
-                return _context2.abrupt("return", res.json({
+                return _context2.abrupt("return", res.status(400).json({
                   msg: "employee with name is ".concat(req.body.employeeName, " already exist")
                 }));
 
               case 5:
+                _context2.next = 7;
+                return _employee["default"].findOne({
+                  email: req.body.email
+                });
+
+              case 7:
+                existed_email = _context2.sent;
+
+                if (!existed_email) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: "".concat(req.body.email, " already exist, use another")
+                }));
+
+              case 10:
+                _context2.next = 12;
+                return _employee["default"].findOne({
+                  idNumber: req.body.idNumber
+                });
+
+              case 12:
+                existed_id = _context2.sent;
+
+                if (!existed_id) {
+                  _context2.next = 15;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: "".concat(req.bdoy.idNumber, " already exist, try another")
+                }));
+
+              case 15:
+                _context2.next = 17;
+                return _employee["default"].findOne({
+                  phoneNumber: req.body.phoneNumber
+                });
+
+              case 17:
+                existed_number = _context2.sent;
+
+                if (!existed_number) {
+                  _context2.next = 20;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: "".concat(req.body.phoneNumber, " already exist, use another")
+                }));
+
+              case 20:
+                year = parseInt(req.body.year);
+                month = parseInt(req.body.month);
+                date = parseInt(req.body.date); //checking if employee is above 18
+
+                d = new Date();
+                today = d.getFullYear();
+
+                if (!(today - year < 18)) {
+                  _context2.next = 27;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: "".concat(req.body.employeeName, " is below 18")
+                }));
+
+              case 27:
+                birthDate = "".concat(date, "/ ").concat(month, "/ ").concat(year); //checking if phone number is rwandan
+
+                checkNumber = /^\+250/.test(req.body.phoneNumber);
+
+                if (!(checkNumber != true)) {
+                  _context2.next = 31;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: 'phone number must be a valid rwandan number (starting with +250)'
+                }));
+
+              case 31:
+                //instantiating mongoose schema for db submission
                 employee = new _employee["default"]({
                   employeeName: req.body.employeeName,
                   idNumber: req.body.idNumber,
                   phoneNumber: req.body.phoneNumber,
                   email: req.body.email,
                   status: req.body.status,
-                  birthDate: req.body.birthDate,
+                  birthDate: birthDate,
                   position: req.body.position
                 });
                 mailOption = {
                   from: process.env.EMAIL,
                   to: req.body.email,
                   subject: "notification email",
-                  text: 'this an email to notify about your employement'
+                  text: 'this an email to notify about your employement',
+                  html: "<h1>notification email<h1><p>Dear ".concat(req.body.employeeName, " this is to tell you that you were employed in our company")
                 };
 
                 _mailer["default"].sendMail(mailOption,
@@ -118,7 +203,7 @@ function () {
                   };
                 }());
 
-              case 8:
+              case 34:
               case "end":
                 return _context2.stop();
             }

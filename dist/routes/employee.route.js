@@ -8,8 +8,10 @@ var _employee = _interopRequireDefault(require("../controllers/employee"));
 
 var _authentification = require("../controllers/authentification");
 
+var _validation = require("./validator/validation");
+
 var router = new _express.Router();
-router.route('/').post(_authentification.auth, _employee["default"].addEmployee);
+router.route('/').post(_validation.employeeValidation, _authentification.auth, _employee["default"].addEmployee);
 router.route('/:name')["delete"](_authentification.auth, _employee["default"].deleteEmployee);
 router.route('/:name').put(_authentification.auth, _employee["default"].editEmployee);
 router.route('/:name/activate').put(_authentification.auth, _employee["default"].activateEmployee);

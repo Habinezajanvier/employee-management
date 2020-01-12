@@ -24,12 +24,15 @@ const employeeShcema = mongoose.Schema({
     },
     birthDate: {
         type: String,
-        default: "01-01-2000",
         required: true
     },
     position: {
         type: String,
         required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     }
 
 });

@@ -9,7 +9,7 @@ exports.employeeValidation = exports.loginValidation = exports.registerValidatio
 
 var _joi = _interopRequireDefault(require("@hapi/joi"));
 
-var registerValidation = function registerValidation(data) {
+var registerValidation = function registerValidation(req, res, next) {
   var schema = _joi["default"].object({
     employeeName: _joi["default"].string().required(),
     idNumber: _joi["default"].string().required().min(16).max(16),
@@ -20,29 +20,40 @@ var registerValidation = function registerValidation(data) {
     birthDate: _joi["default"].string()
   });
 
-  return schema.validate(data);
+  var _schema$validate = schema.validate(req.body),
+      error = _schema$validate.error;
+
+  if (error) return res.status(400).json({
+    msg: error.details[0].message
+  });
+  next();
 };
 
 exports.registerValidation = registerValidation;
 
-var loginValidation = function loginValidation(data) {
+var loginValidation = function loginValidation(req, res, next) {
   var schema = _joi["default"].object({
     employeeName: _joi["default"].string().required(),
     password: _joi["default"].string().required()
   });
 
-  return schema.validate(data);
+  var _schema$validate2 = schema.validate(req.body),
+      error = _schema$validate2.error;
+
+  if (error) return res.status(400).json({
+    msg: error.details[0].message
+  });
+  next();
 };
 
 exports.loginValidation = loginValidation;
 
-var employeeValidation = function employeeValidation(data) {
+var employeeValidation = function employeeValidation(req, res, next) {
   var schema = _joi["default"].object({
     employeeName: _joi["default"].string().required(),
     idNumber: _joi["default"].string().required().min(16).max(16),
     email: _joi["default"].string().required().email(),
     phoneNumber: _joi["default"].string().min(12).max(13),
-    password: _joi["default"].string().required(),
     position: _joi["default"].string().required(),
     status: _joi["default"].string(),
     date: _joi["default"].string().required(),
@@ -50,7 +61,13 @@ var employeeValidation = function employeeValidation(data) {
     year: _joi["default"].string().required()
   });
 
-  return schema.validate(data);
+  var _schema$validate3 = schema.validate(req.body),
+      error = _schema$validate3.error;
+
+  if (error) return res.status(400).json({
+    msg: error.details[0].message
+  });
+  next();
 };
 
 exports.employeeValidation = employeeValidation;

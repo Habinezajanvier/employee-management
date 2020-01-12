@@ -1,21 +1,50 @@
 import Employee from '../../models/employee';
 import transporter from '../mailer/mailer';
-import { auth } from './authentification';
 
 class EmployeeController {
     static async addEmployee (req, res) {
 
+
         //we have to prevent to add one employee two times
         const existed_employee = await Employee.findOne({employeeName: req.body.employeeName});
-        if (existed_employee) return res.json({msg: `employee with name is ${req.body.employeeName} already exist`});
+        if (existed_employee) return res.status(400).json({msg: `employee with name is ${req.body.employeeName} already exist`});
 
+        //preventing double email on employee
+        const existed_email = await Employee.findOne({email: req.body.email});
+        if (existed_email) return res.status(400).json({msg: `${req.body.email} already exist, use another`});
+
+        //preventing id to be doubled
+        const existed_id = await Employee.findOne({idNumber: req.body.idNumber});
+        if (existed_id) return res.status(400).json({msg: `${req.bdoy.idNumber} already exist, try another`});
+
+        //prenting one phone number to be used on more than one employee
+        const existed_number = await Employee.findOne({phoneNumber: req.body.phoneNumber});
+        if (existed_number) return res.status(400).json({msg: `${req.body.phoneNumber} already exist, use another`});
+
+        const year = parseInt(req.body.year);
+        const month = parseInt(req.body.month);
+        const date = parseInt(req.body.date);
+
+        //checking if employee is above 18
+        const d = new Date();
+        const today = d.getFullYear();
+
+        if (today - year < 18) return res.status(400).json({msg: `${req.body.employeeName} is below 18`});
+
+        const birthDate = `${date}/ ${month}/ ${year}`;
+
+        //checking if phone number is rwandan
+        let checkNumber = /^\+250/.test(req.body.phoneNumber);
+        if (checkNumber != true ) return res.status(400).json({msg: 'phone number must be a valid rwandan number (starting with +250)'});
+
+        //instantiating mongoose schema for db submission
         const employee = new Employee({
             employeeName: req.body.employeeName,
             idNumber: req.body.idNumber,
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
             status: req.body.status,
-            birthDate: req.body.birthDate,
+            birthDate: birthDate,
             position: req.body.position
         });
 
@@ -24,6 +53,7 @@ class EmployeeController {
             to: req.body.email,
             subject: "notification email",
             text: 'this an email to notify about your employement',
+            html: `<h1>notification email<h1><p>Dear ${req.body.employeeName} this is to tell you that you were employed in our company`
         };
         transporter.sendMail(mailOption, async (err, info)=>{
             if (err) console.log(err);

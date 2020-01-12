@@ -5,14 +5,9 @@ import mailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
 import transporter from '../mailer/mailer';
 import dotenv from 'dotenv';
-import { registerValidation } from './validator/validation';
-
 
 class ManagerController {
     static async register(req, res) {
-
-        const {error} = registerValidation(req.body);
-        if (error) return res.status(400).json({msg: error.details[0].message});
 
         //searching if manager existed
         const exist = await Manager.findOne({employeeName: req.body.employeeName});
@@ -64,6 +59,7 @@ class ManagerController {
         }
     };
     static async login(req, res){
+
         //searching if the loged in manager already registered;
         const manager = await Manager.findOne({employeeName: req.body.employeeName});
         if (!manager) return res.json({msg: "first register as manager to continue"});
