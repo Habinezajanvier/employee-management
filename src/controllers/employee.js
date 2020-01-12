@@ -37,6 +37,9 @@ class EmployeeController {
         let checkNumber = /^\+250/.test(req.body.phoneNumber);
         if (checkNumber != true ) return res.status(400).json({msg: 'phone number must be a valid rwandan number (starting with +250)'});
 
+        //validating employee status
+        if( req.boy.status != 'active' || req.body.status != 'desactive') return res.status(400).json({msg: 'your status is not valid'});
+
         //instantiating mongoose schema for db submission
         const employee = new Employee({
             employeeName: req.body.employeeName,
@@ -56,11 +59,11 @@ class EmployeeController {
             html: `<h1>notification email<h1><p>Dear ${req.body.employeeName} this is to tell you that you were employed in our company`
         };
         transporter.sendMail(mailOption, async (err, info)=>{
-            if (err) console.log(err);
+            if (err) res.json(err);
     
             try {
                 const saved_employee = await employee.save();
-                res.json(saved_employee)
+                res.json({msg: `${req.body.employeeName} has been successfully added`});
             } catch (error) {
                 res.json({msg: "employee not saved, \n be sure you are online and try again"})
             };
@@ -70,6 +73,10 @@ class EmployeeController {
     };
 
     static async deleteEmployee (req, res) {
+
+        const employee = await Employee.findOne({employeeName: req.params.name});
+        if (!employee ) return res.status(400).json({msg: 'employee not exit'});
+
         try {
             const be_deleted = await Employee.findOneAndRemove({employeeName: req.params.name});
             res.json({msg: `employee whose name is ${req.params.name} is deleted`})
@@ -79,36 +86,87 @@ class EmployeeController {
     };
 
     static async editEmployee (req, res) {
+
+        const year = parseInt(req.body.year);
+        const month = parseInt(req.body.month);
+        const date = parseInt(req.body.date);
+
+        //checking if employee is above 18
+        const d = new Date();
+        const today = d.getFullYear();
+
+        if (today - year < 18) return res.status(400).json({msg: `${req.body.employeeName} is below 18`});
+
+        const birthDate = `${date}/ ${month}/ ${year}`;
+
+        //checking if phone number is rwandan
+        let checkNumber = /^\+250/.test(req.body.phoneNumber);
+        if (checkNumber != true ) return res.status(400).json({msg: 'phone number must be a valid rwandan number (starting with +250)'});
+
+        const employee = await Employee.findOne({employeeName: req.params.name});
+        if (!employee ) return res.status(400).json({msg: 'employee not exit'});
+
         try {
             const update_employee = await Employee.updateOne({employeeName: req.params.name},
                 {$set: {phoneNumber: req.body.phoneNumber,
                      email: req.body.email, 
-                     birthDate: req.body.birthDate, 
+                     birthDate: birthDate, 
                      position: req.body.position
                     }
                 });
             res.json({msg: `${req.params.name} have been successfully edited`})
 
         } catch (error) {
-            console.log(error)
+            res.status(500).json({msg: "internal error, please try again later"});
         }
     };
 
     static async activateEmployee (req, res){
+        //validating employee status
+        if( req.boy.status != 'active' || req.body.status != 'desactive') return res.status(400).json({msg: 'your status is not valid'});
+
+        const employee = await Employee.findOne({employeeName: req.params.name});
+        if (!employee ) return res.status(400).json({msg: 'employee not exit'});
+
+        if (employee.status == 'active') return res.json({msg: `${employee.employeeName} no need to ativate an active employee`});
+
         try {
             const activated_employee = await Employee.updateOne({employeeName: req.params.name}, {$set: {status: req.body.status}});
             res.json({msg: `${req.params.name} have been activeted successfully`})
         } catch (error) {
-            console.log(error);
+            res.status(500).json({msg: 'internal error, please try again later'});
         }
     };
 
     static async suspendEmployee (req, res){
+        //validating employee status
+        if( req.boy.status != 'active' || req.body.status != 'desactive') return res.status(400).json({msg: 'your status is not valid'});
+
+        const employee = await Employee.findOne({employeeName: req.params.name});
+        if (!employee ) return res.status(400).json({msg: 'employee not exit'});
+
+        if (employee.status == 'desactive') return res.json({msg: `${employee.employeeName} no need to desativate an desactive employee`});
+        
         try {
             const activated_employee = await Employee.updateOne({employeeName: req.params.name}, {$set: {status: req.body.status}});
             res.json({msg: `${req.params.name} have been desactiveted successfully`})
         } catch (error) {
-            console.log(error);
+            res.status(500).json({msg: 'internal error, please try again later'});
+        }
+    }
+
+    static async searchEmployee (req, res) {
+        try {
+            const searched_employee = await Employee.find({
+                $or:[{employeeName: req.body.employeeName}, 
+                    {position: req.body.position},
+                    {phoneNumber: req.body.phoneNumber},
+                    {email: req.body.email}
+                ]});
+            
+            res.json(searched_employee);
+        } catch (error) {
+            res.status(500).json({msg: 'internal error, try again later please'})
         }
     }
 };

@@ -1,7 +1,7 @@
 {
   "name": "employee_mgt",
   "version": "1.0.0",
-  "description": "",
+  "description": "application to manage employee in company",
   "main": "index.js",
   "scripts": {
     "build": ".\\node_modules\\.bin\\babel src --out-dir dist",
@@ -9,7 +9,7 @@
     "dev": "nodemon dist/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Habineza janvier",
   "license": "ISC",
   "dependencies": {
     "@babel/cli": "^7.7.7",

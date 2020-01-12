@@ -169,14 +169,16 @@ function () {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            if (err) console.log(err);
+                            if (err) res.json(err);
                             _context.prev = 1;
                             _context.next = 4;
                             return employee.save();
 
                           case 4:
                             saved_employee = _context.sent;
-                            res.json(saved_employee);
+                            res.json({
+                              msg: "".concat(req.body.employeeName, " has been successfully added")
+                            });
                             _context.next = 11;
                             break;
 
@@ -298,7 +300,9 @@ function () {
               case 7:
                 _context4.prev = 7;
                 _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0);
+                res.status(500).json({
+                  msg: "internal error, please try again later"
+                });
 
               case 10:
               case "end":
@@ -346,7 +350,9 @@ function () {
               case 7:
                 _context5.prev = 7;
                 _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0);
+                res.status(500).json({
+                  msg: 'internal error, please try again later'
+                });
 
               case 10:
               case "end":
@@ -394,7 +400,9 @@ function () {
               case 7:
                 _context6.prev = 7;
                 _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0);
+                res.status(500).json({
+                  msg: 'internal error, please try again later'
+                });
 
               case 10:
               case "end":
@@ -409,6 +417,58 @@ function () {
       }
 
       return suspendEmployee;
+    }()
+  }, {
+    key: "searchEmployee",
+    value: function () {
+      var _searchEmployee = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee7(req, res) {
+        var searched_employee;
+        return _regenerator["default"].wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.prev = 0;
+                _context7.next = 3;
+                return _employee["default"].find({
+                  $or: [{
+                    employeeName: req.body.employeeName
+                  }, {
+                    position: req.body.position
+                  }, {
+                    phoneNumber: req.body.phoneNumber
+                  }, {
+                    email: req.body.email
+                  }]
+                });
+
+              case 3:
+                searched_employee = _context7.sent;
+                res.json(searched_employee);
+                _context7.next = 10;
+                break;
+
+              case 7:
+                _context7.prev = 7;
+                _context7.t0 = _context7["catch"](0);
+                res.status(500).json({
+                  msg: 'internal error, try again later please'
+                });
+
+              case 10:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[0, 7]]);
+      }));
+
+      function searchEmployee(_x13, _x14) {
+        return _searchEmployee.apply(this, arguments);
+      }
+
+      return searchEmployee;
     }()
   }]);
   return EmployeeController;

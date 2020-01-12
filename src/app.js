@@ -10,7 +10,7 @@ const app = express();
 //middlewares
 app.use(express.json());
 app.use('/company', managerRoute);
-app.use('/company/employee', employeeRoute);
+app.use('/company/employees', employeeRoute);
 
 
 const port = process.env.PORT || 3000;
@@ -22,4 +22,4 @@ mongoose.connect(process.env.DB_CONNECT,
         useUnifiedTopology: true  },
     () => console.log('connected to database'));
 
-app.listen(port, ()=> console.log(`our app is running, can be accessed now on ${port}`));
+app.listen(port, ()=> console.log(`our app is running, can be accessed now on $http://localhost{port}`));

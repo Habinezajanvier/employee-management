@@ -41,4 +41,21 @@ export const employeeValidation = (req, res, next) => {
     const {error} = schema.validate(req.body);
     if (error) return res.status(400).json({msg: error.details[0].message});
     next();
-}
+};
+
+export const editValidation = (req, res, next) =>{
+    const schema = Joi.object({
+        employeeName: Joi.string(),
+        idNumber: Joi.string().min(16).max(16),
+        email: Joi.string().email(),
+        phoneNumber: Joi.string().min(12).max(13),
+        position: Joi.string(),
+        status: Joi.string(),
+        date: Joi.string(),
+        month: Joi.string(),
+        year: Joi.string()
+    });
+    const {error} = schema.validate(req.body);
+    if (error) return res.status(400).json({msg: error.details[0].message});
+    next();
+};

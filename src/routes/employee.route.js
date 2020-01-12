@@ -1,14 +1,15 @@
 import {Router} from 'express';
-import EmpployeeController from "../controllers/employee";
+import EmployeeController from "../controllers/employee";
 import { auth} from '../controllers/authentification';
-import { employeeValidation} from './validator/validation';
+import { employeeValidation, editValidation} from './validator/validation';
 
 const router = new Router();
 
-router.route('/').post( employeeValidation, auth, EmpployeeController.addEmployee);
-router.route('/:name').delete(auth, EmpployeeController.deleteEmployee);
-router.route('/:name').put(auth, EmpployeeController.editEmployee);
-router.route('/:name/activate').put(auth, EmpployeeController.activateEmployee);
-router.route('/:name/suspend').put(auth, EmpployeeController.suspendEmployee);
+router.route('/').post( auth, employeeValidation, EmployeeController.addEmployee);
+router.route('/:name').delete(auth, EmployeeController.deleteEmployee);
+router.route('/:name').put(auth, editValidation, EmployeeController.editEmployee);
+router.route('/:name/activate').put(auth, EmployeeController.activateEmployee);
+router.route('/:name/suspend').put(auth, EmployeeController.suspendEmployee);
+router.route('/search').post( auth, editValidation, EmployeeController.searchEmployee);
 
 module.exports = router;

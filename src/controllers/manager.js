@@ -44,19 +44,16 @@ class ManagerController {
             subject: "registration verification",
             text: 'here is the email to verify your registration',
         };
-        transporter.sendMail(mailOption, (err, info)=>{
-            if (err) console.log(err);
+        transporter.sendMail(mailOption, async (err, info)=>{
+            if (err) res.json(err)
     
-            console.log(info);
-        })
-        
-
-        try {
-            const saved_data = await manager.save();
-            res.json(saved_data);
-        } catch (error) {
-            res.json(console.log(error))
-        }
+            try {
+                const saved_data = await manager.save();
+                res.json({msg: 'you are successfully registered as manager'});
+            } catch (error) {
+                res.status(500).json({msg: 'internal error, try again later'})
+            };
+        });
     };
     static async login(req, res){
 
