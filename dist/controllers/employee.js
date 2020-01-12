@@ -140,7 +140,7 @@ function () {
                 }));
 
               case 31:
-                if (!(req.boy.status != 'active' || req.body.status != 'desactive')) {
+                if (!(req.body.status != 'active' || req.body.status != 'desactive')) {
                   _context2.next = 33;
                   break;
                 }
@@ -406,7 +406,7 @@ function () {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                if (!(req.boy.status != 'active' || req.body.status != 'desactive')) {
+                if (!(req.body.status != 'active' || req.body.status != 'desactive')) {
                   _context5.next = 2;
                   break;
                 }
@@ -494,7 +494,7 @@ function () {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                if (!(req.boy.status != 'active' || req.body.status != 'desactive')) {
+                if (!(req.body.status != 'active' || req.body.status != 'desactive')) {
                   _context6.next = 2;
                   break;
                 }
