@@ -16,7 +16,7 @@ var app = (0, _express["default"])(); //middlewares
 
 app.use(_express["default"].json());
 app.use('/company', _manager["default"]);
-app.use('/company/employee', _employee["default"]);
+app.use('/company/employees', _employee["default"]);
 var port = process.env.PORT || 3000; //connecting to mongodb data base;
 
 _mongoose["default"].connect(process.env.DB_CONNECT, {
@@ -28,5 +28,5 @@ _mongoose["default"].connect(process.env.DB_CONNECT, {
 });
 
 app.listen(port, function () {
-  return console.log("our app is running, can be accessed now on ".concat(port));
+  return console.log("our app is running, can be accessed now on $http://localhost".concat(port));
 });

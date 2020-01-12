@@ -140,6 +140,16 @@ function () {
                 }));
 
               case 31:
+                if (!(req.boy.status != 'active' || req.body.status != 'desactive')) {
+                  _context2.next = 33;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: 'your status is not valid'
+                }));
+
+              case 33:
                 //instantiating mongoose schema for db submission
                 employee = new _employee["default"]({
                   employeeName: req.body.employeeName,
@@ -205,7 +215,7 @@ function () {
                   };
                 }());
 
-              case 34:
+              case 36:
               case "end":
                 return _context2.stop();
             }
@@ -225,38 +235,56 @@ function () {
       var _deleteEmployee = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee3(req, res) {
-        var be_deleted;
+        var employee, be_deleted;
         return _regenerator["default"].wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
+                _context3.next = 2;
+                return _employee["default"].findOne({
+                  employeeName: req.params.name
+                });
+
+              case 2:
+                employee = _context3.sent;
+
+                if (employee) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt("return", res.status(400).json({
+                  msg: 'employee not exit'
+                }));
+
+              case 5:
+                _context3.prev = 5;
+                _context3.next = 8;
                 return _employee["default"].findOneAndRemove({
                   employeeName: req.params.name
                 });
 
-              case 3:
+              case 8:
                 be_deleted = _context3.sent;
                 res.json({
                   msg: "employee whose name is ".concat(req.params.name, " is deleted")
                 });
-                _context3.next = 10;
+                _context3.next = 15;
                 break;
 
-              case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
+              case 12:
+                _context3.prev = 12;
+                _context3.t0 = _context3["catch"](5);
                 res.json({
                   msg: "internal error try again please"
                 });
 
-              case 10:
+              case 15:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 7]]);
+        }, _callee3, null, [[5, 12]]);
       }));
 
       function deleteEmployee(_x5, _x6) {
@@ -271,45 +299,94 @@ function () {
       var _editEmployee = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee4(req, res) {
-        var update_employee;
+        var year, month, date, d, today, birthDate, checkNumber, employee, update_employee;
         return _regenerator["default"].wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                year = parseInt(req.body.year);
+                month = parseInt(req.body.month);
+                date = parseInt(req.body.date); //checking if employee is above 18
+
+                d = new Date();
+                today = d.getFullYear();
+
+                if (!(today - year < 18)) {
+                  _context4.next = 7;
+                  break;
+                }
+
+                return _context4.abrupt("return", res.status(400).json({
+                  msg: "".concat(req.body.employeeName, " is below 18")
+                }));
+
+              case 7:
+                birthDate = "".concat(date, "/ ").concat(month, "/ ").concat(year); //checking if phone number is rwandan
+
+                checkNumber = /^\+250/.test(req.body.phoneNumber);
+
+                if (!(checkNumber != true)) {
+                  _context4.next = 11;
+                  break;
+                }
+
+                return _context4.abrupt("return", res.status(400).json({
+                  msg: 'phone number must be a valid rwandan number (starting with +250)'
+                }));
+
+              case 11:
+                _context4.next = 13;
+                return _employee["default"].findOne({
+                  employeeName: req.params.name
+                });
+
+              case 13:
+                employee = _context4.sent;
+
+                if (employee) {
+                  _context4.next = 16;
+                  break;
+                }
+
+                return _context4.abrupt("return", res.status(400).json({
+                  msg: 'employee not exit'
+                }));
+
+              case 16:
+                _context4.prev = 16;
+                _context4.next = 19;
                 return _employee["default"].updateOne({
                   employeeName: req.params.name
                 }, {
                   $set: {
                     phoneNumber: req.body.phoneNumber,
                     email: req.body.email,
-                    birthDate: req.body.birthDate,
+                    birthDate: birthDate,
                     position: req.body.position
                   }
                 });
 
-              case 3:
+              case 19:
                 update_employee = _context4.sent;
                 res.json({
                   msg: "".concat(req.params.name, " have been successfully edited")
                 });
-                _context4.next = 10;
+                _context4.next = 26;
                 break;
 
-              case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](0);
+              case 23:
+                _context4.prev = 23;
+                _context4.t0 = _context4["catch"](16);
                 res.status(500).json({
                   msg: "internal error, please try again later"
                 });
 
-              case 10:
+              case 26:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 7]]);
+        }, _callee4, null, [[16, 23]]);
       }));
 
       function editEmployee(_x7, _x8) {
@@ -324,13 +401,51 @@ function () {
       var _activateEmployee = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee5(req, res) {
-        var activated_employee;
+        var employee, activated_employee;
         return _regenerator["default"].wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                if (!(req.boy.status != 'active' || req.body.status != 'desactive')) {
+                  _context5.next = 2;
+                  break;
+                }
+
+                return _context5.abrupt("return", res.status(400).json({
+                  msg: 'your status is not valid'
+                }));
+
+              case 2:
+                _context5.next = 4;
+                return _employee["default"].findOne({
+                  employeeName: req.params.name
+                });
+
+              case 4:
+                employee = _context5.sent;
+
+                if (employee) {
+                  _context5.next = 7;
+                  break;
+                }
+
+                return _context5.abrupt("return", res.status(400).json({
+                  msg: 'employee not exit'
+                }));
+
+              case 7:
+                if (!(employee.status == 'active')) {
+                  _context5.next = 9;
+                  break;
+                }
+
+                return _context5.abrupt("return", res.json({
+                  msg: "".concat(employee.employeeName, " no need to ativate an active employee")
+                }));
+
+              case 9:
+                _context5.prev = 9;
+                _context5.next = 12;
                 return _employee["default"].updateOne({
                   employeeName: req.params.name
                 }, {
@@ -339,27 +454,27 @@ function () {
                   }
                 });
 
-              case 3:
+              case 12:
                 activated_employee = _context5.sent;
                 res.json({
                   msg: "".concat(req.params.name, " have been activeted successfully")
                 });
-                _context5.next = 10;
+                _context5.next = 19;
                 break;
 
-              case 7:
-                _context5.prev = 7;
-                _context5.t0 = _context5["catch"](0);
+              case 16:
+                _context5.prev = 16;
+                _context5.t0 = _context5["catch"](9);
                 res.status(500).json({
                   msg: 'internal error, please try again later'
                 });
 
-              case 10:
+              case 19:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[0, 7]]);
+        }, _callee5, null, [[9, 16]]);
       }));
 
       function activateEmployee(_x9, _x10) {
@@ -374,13 +489,51 @@ function () {
       var _suspendEmployee = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee6(req, res) {
-        var activated_employee;
+        var employee, activated_employee;
         return _regenerator["default"].wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                if (!(req.boy.status != 'active' || req.body.status != 'desactive')) {
+                  _context6.next = 2;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.status(400).json({
+                  msg: 'your status is not valid'
+                }));
+
+              case 2:
+                _context6.next = 4;
+                return _employee["default"].findOne({
+                  employeeName: req.params.name
+                });
+
+              case 4:
+                employee = _context6.sent;
+
+                if (employee) {
+                  _context6.next = 7;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.status(400).json({
+                  msg: 'employee not exit'
+                }));
+
+              case 7:
+                if (!(employee.status == 'desactive')) {
+                  _context6.next = 9;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.json({
+                  msg: "".concat(employee.employeeName, " no need to desativate an desactive employee")
+                }));
+
+              case 9:
+                _context6.prev = 9;
+                _context6.next = 12;
                 return _employee["default"].updateOne({
                   employeeName: req.params.name
                 }, {
@@ -389,27 +542,27 @@ function () {
                   }
                 });
 
-              case 3:
+              case 12:
                 activated_employee = _context6.sent;
                 res.json({
                   msg: "".concat(req.params.name, " have been desactiveted successfully")
                 });
-                _context6.next = 10;
+                _context6.next = 19;
                 break;
 
-              case 7:
-                _context6.prev = 7;
-                _context6.t0 = _context6["catch"](0);
+              case 16:
+                _context6.prev = 16;
+                _context6.t0 = _context6["catch"](9);
                 res.status(500).json({
                   msg: 'internal error, please try again later'
                 });
 
-              case 10:
+              case 19:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, null, [[0, 7]]);
+        }, _callee6, null, [[9, 16]]);
       }));
 
       function suspendEmployee(_x11, _x12) {

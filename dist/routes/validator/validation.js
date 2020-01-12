@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.employeeValidation = exports.loginValidation = exports.registerValidation = void 0;
+exports.editValidation = exports.employeeValidation = exports.loginValidation = exports.registerValidation = void 0;
 
 var _joi = _interopRequireDefault(require("@hapi/joi"));
 
@@ -71,3 +71,27 @@ var employeeValidation = function employeeValidation(req, res, next) {
 };
 
 exports.employeeValidation = employeeValidation;
+
+var editValidation = function editValidation(req, res, next) {
+  var schema = _joi["default"].object({
+    employeeName: _joi["default"].string(),
+    idNumber: _joi["default"].string().min(16).max(16),
+    email: _joi["default"].string().email(),
+    phoneNumber: _joi["default"].string().min(12).max(13),
+    position: _joi["default"].string(),
+    status: _joi["default"].string(),
+    date: _joi["default"].string(),
+    month: _joi["default"].string(),
+    year: _joi["default"].string()
+  });
+
+  var _schema$validate4 = schema.validate(req.body),
+      error = _schema$validate4.error;
+
+  if (error) return res.status(400).json({
+    msg: error.details[0].message
+  });
+  next();
+};
+
+exports.editValidation = editValidation;
