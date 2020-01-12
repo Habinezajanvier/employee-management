@@ -28,5 +28,5 @@ _mongoose["default"].connect(process.env.DB_CONNECT, {
 });
 
 app.listen(port, function () {
-  return console.log("our app is running, can be accessed now on http://localhost:".concat(port));
+  return console.log("our app is running, can be accessed now on http://localhost:".concat(port, "/company/"));
 });

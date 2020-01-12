@@ -140,16 +140,6 @@ function () {
                 }));
 
               case 31:
-                if (!(req.body.status != 'active' || req.body.status != 'desactive')) {
-                  _context2.next = 33;
-                  break;
-                }
-
-                return _context2.abrupt("return", res.status(400).json({
-                  msg: 'your status is not valid'
-                }));
-
-              case 33:
                 //instantiating mongoose schema for db submission
                 employee = new _employee["default"]({
                   employeeName: req.body.employeeName,
@@ -215,7 +205,7 @@ function () {
                   };
                 }());
 
-              case 36:
+              case 34:
               case "end":
                 return _context2.stop();
             }
@@ -406,26 +396,16 @@ function () {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                if (!(req.body.status != 'active' || req.body.status != 'desactive')) {
-                  _context5.next = 2;
-                  break;
-                }
-
-                return _context5.abrupt("return", res.status(400).json({
-                  msg: 'your status is not valid'
-                }));
-
-              case 2:
-                _context5.next = 4;
+                _context5.next = 2;
                 return _employee["default"].findOne({
                   employeeName: req.params.name
                 });
 
-              case 4:
+              case 2:
                 employee = _context5.sent;
 
                 if (employee) {
-                  _context5.next = 7;
+                  _context5.next = 5;
                   break;
                 }
 
@@ -433,9 +413,9 @@ function () {
                   msg: 'employee not exit'
                 }));
 
-              case 7:
+              case 5:
                 if (!(employee.status == 'active')) {
-                  _context5.next = 9;
+                  _context5.next = 7;
                   break;
                 }
 
@@ -443,9 +423,9 @@ function () {
                   msg: "".concat(employee.employeeName, " no need to ativate an active employee")
                 }));
 
-              case 9:
-                _context5.prev = 9;
-                _context5.next = 12;
+              case 7:
+                _context5.prev = 7;
+                _context5.next = 10;
                 return _employee["default"].updateOne({
                   employeeName: req.params.name
                 }, {
@@ -454,27 +434,27 @@ function () {
                   }
                 });
 
-              case 12:
+              case 10:
                 activated_employee = _context5.sent;
                 res.json({
                   msg: "".concat(req.params.name, " have been activeted successfully")
                 });
-                _context5.next = 19;
+                _context5.next = 17;
                 break;
 
-              case 16:
-                _context5.prev = 16;
-                _context5.t0 = _context5["catch"](9);
+              case 14:
+                _context5.prev = 14;
+                _context5.t0 = _context5["catch"](7);
                 res.status(500).json({
                   msg: 'internal error, please try again later'
                 });
 
-              case 19:
+              case 17:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[9, 16]]);
+        }, _callee5, null, [[7, 14]]);
       }));
 
       function activateEmployee(_x9, _x10) {
@@ -494,26 +474,16 @@ function () {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                if (!(req.body.status != 'active' || req.body.status != 'desactive')) {
-                  _context6.next = 2;
-                  break;
-                }
-
-                return _context6.abrupt("return", res.status(400).json({
-                  msg: 'your status is not valid'
-                }));
-
-              case 2:
-                _context6.next = 4;
+                _context6.next = 2;
                 return _employee["default"].findOne({
                   employeeName: req.params.name
                 });
 
-              case 4:
+              case 2:
                 employee = _context6.sent;
 
                 if (employee) {
-                  _context6.next = 7;
+                  _context6.next = 5;
                   break;
                 }
 
@@ -521,9 +491,9 @@ function () {
                   msg: 'employee not exit'
                 }));
 
-              case 7:
+              case 5:
                 if (!(employee.status == 'desactive')) {
-                  _context6.next = 9;
+                  _context6.next = 7;
                   break;
                 }
 
@@ -531,9 +501,9 @@ function () {
                   msg: "".concat(employee.employeeName, " no need to desativate an desactive employee")
                 }));
 
-              case 9:
-                _context6.prev = 9;
-                _context6.next = 12;
+              case 7:
+                _context6.prev = 7;
+                _context6.next = 10;
                 return _employee["default"].updateOne({
                   employeeName: req.params.name
                 }, {
@@ -542,27 +512,27 @@ function () {
                   }
                 });
 
-              case 12:
+              case 10:
                 activated_employee = _context6.sent;
                 res.json({
                   msg: "".concat(req.params.name, " have been desactiveted successfully")
                 });
-                _context6.next = 19;
+                _context6.next = 17;
                 break;
 
-              case 16:
-                _context6.prev = 16;
-                _context6.t0 = _context6["catch"](9);
+              case 14:
+                _context6.prev = 14;
+                _context6.t0 = _context6["catch"](7);
                 res.status(500).json({
                   msg: 'internal error, please try again later'
                 });
 
-              case 19:
+              case 17:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, null, [[9, 16]]);
+        }, _callee6, null, [[7, 14]]);
       }));
 
       function suspendEmployee(_x11, _x12) {

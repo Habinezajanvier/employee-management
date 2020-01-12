@@ -37,9 +37,6 @@ class EmployeeController {
         let checkNumber = /^\+250/.test(req.body.phoneNumber);
         if (checkNumber != true ) return res.status(400).json({msg: 'phone number must be a valid rwandan number (starting with +250)'});
 
-        //validating employee status
-        if( req.body.status != 'active' || req.body.status != 'desactive') return res.status(400).json({msg: 'your status is not valid'});
-
         //instantiating mongoose schema for db submission
         const employee = new Employee({
             employeeName: req.body.employeeName,
@@ -79,7 +76,7 @@ class EmployeeController {
 
         try {
             const be_deleted = await Employee.findOneAndRemove({employeeName: req.params.name});
-            res.json({msg: `employee whose name is ${req.params.name} is deleted`})
+            res.json({msg: `employee whose name is ${req.params.name} is successfully deleted`})
         } catch (error) {
             res.json({msg: "internal error try again please"});
         }
@@ -122,8 +119,6 @@ class EmployeeController {
     };
 
     static async activateEmployee (req, res){
-        //validating employee status
-        if( req.body.status != 'active' || req.body.status != 'desactive') return res.status(400).json({msg: 'your status is not valid'});
 
         const employee = await Employee.findOne({employeeName: req.params.name});
         if (!employee ) return res.status(400).json({msg: 'employee not exit'});
@@ -139,8 +134,6 @@ class EmployeeController {
     };
 
     static async suspendEmployee (req, res){
-        //validating employee status
-        if( req.body.status != 'active' || req.body.status != 'desactive') return res.status(400).json({msg: 'your status is not valid'});
 
         const employee = await Employee.findOne({employeeName: req.params.name});
         if (!employee ) return res.status(400).json({msg: 'employee not exit'});
