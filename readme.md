@@ -16,7 +16,8 @@ employee management is web application that help a manager to manage employee he
 - on mongodb create a database called challenge and connect with to your application
 - `cd` to the repository in your local development environment
 - Create `.env` file and fill it with mongodb connecting string and created secret key
-- Run `npm install` and `npm run start` to start the application use **Route** given on your console
+- Run `npm install` and `npm run start` to start the application 
+> use **Route** given on your console
 
 ## prerequisites 
 
