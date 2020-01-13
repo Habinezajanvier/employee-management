@@ -29,14 +29,14 @@ this application require basic knowledge on javascript, nodejs with express and 
 - open postman
 - using url of http://localhost:3000/company/register , using post method create a manager account
 - data to be submitted should be
-`{
-    employeeName: employeeName,
-    idNumber: national_SidNumber,
-    email: valid_email,
-    password: Password,
-    position: position,
-    status: status,
-    birthDate: birthDate  
+`{\n
+    employeeName: employeeName,\n
+    idNumber: national_SidNumber,\n
+    email: valid_email,\n
+    password: Password,\n
+    position: position,\n
+    status: status,\n
+    birthDate: birthDate\n 
 }`
 - using url of http://localhost:3000/company/login , using post method login as manager to get jwt token
 - to add an employee, on http://localhost:3000/company/employees , 
