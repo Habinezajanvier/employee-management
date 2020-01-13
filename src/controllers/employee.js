@@ -157,6 +157,8 @@ class EmployeeController {
                     {email: req.body.email}
                 ]});
             
+            if (!searched_employee) return res.status(404).json({msg: 'your search not found '});
+
             res.json(searched_employee);
         } catch (error) {
             res.status(500).json({msg: 'internal error, try again later please'})

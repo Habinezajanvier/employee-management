@@ -74,15 +74,12 @@ exports.employeeValidation = employeeValidation;
 
 var editValidation = function editValidation(req, res, next) {
   var schema = _joi["default"].object({
-    employeeName: _joi["default"].string(),
-    idNumber: _joi["default"].string().min(16).max(16),
-    email: _joi["default"].string().email(),
-    phoneNumber: _joi["default"].string().min(12).max(13),
-    position: _joi["default"].string(),
-    status: _joi["default"].string(),
-    date: _joi["default"].string(),
-    month: _joi["default"].string(),
-    year: _joi["default"].string()
+    email: _joi["default"].string().email().required(),
+    phoneNumber: _joi["default"].string().min(12).max(13).required(),
+    position: _joi["default"].string().required(),
+    date: _joi["default"].string().required(),
+    month: _joi["default"].string().required(),
+    year: _joi["default"].string().required()
   });
 
   var _schema$validate4 = schema.validate(req.body),

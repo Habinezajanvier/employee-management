@@ -257,7 +257,7 @@ function () {
               case 8:
                 be_deleted = _context3.sent;
                 res.json({
-                  msg: "employee whose name is ".concat(req.params.name, " is deleted")
+                  msg: "employee whose name is ".concat(req.params.name, " is successfully deleted")
                 });
                 _context3.next = 15;
                 break;
@@ -568,23 +568,34 @@ function () {
 
               case 3:
                 searched_employee = _context7.sent;
+
+                if (searched_employee) {
+                  _context7.next = 6;
+                  break;
+                }
+
+                return _context7.abrupt("return", res.status(404).json({
+                  msg: 'your search not found '
+                }));
+
+              case 6:
                 res.json(searched_employee);
-                _context7.next = 10;
+                _context7.next = 12;
                 break;
 
-              case 7:
-                _context7.prev = 7;
+              case 9:
+                _context7.prev = 9;
                 _context7.t0 = _context7["catch"](0);
                 res.status(500).json({
                   msg: 'internal error, try again later please'
                 });
 
-              case 10:
+              case 12:
               case "end":
                 return _context7.stop();
             }
           }
-        }, _callee7, null, [[0, 7]]);
+        }, _callee7, null, [[0, 9]]);
       }));
 
       function searchEmployee(_x13, _x14) {

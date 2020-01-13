@@ -10,6 +10,6 @@ router.route('/:name').delete(auth, EmployeeController.deleteEmployee);
 router.route('/:name').put(auth, editValidation, EmployeeController.editEmployee);
 router.route('/:name/activate').put(auth, EmployeeController.activateEmployee);
 router.route('/:name/suspend').put(auth, EmployeeController.suspendEmployee);
-router.route('/search').post( auth, editValidation, EmployeeController.searchEmployee);
+router.route('/search').post( auth, EmployeeController.searchEmployee);
 
 module.exports = router;

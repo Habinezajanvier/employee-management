@@ -16,5 +16,5 @@ router.route('/:name')["delete"](_authentification.auth, _employee["default"].de
 router.route('/:name').put(_authentification.auth, _validation.editValidation, _employee["default"].editEmployee);
 router.route('/:name/activate').put(_authentification.auth, _employee["default"].activateEmployee);
 router.route('/:name/suspend').put(_authentification.auth, _employee["default"].suspendEmployee);
-router.route('/search').post(_authentification.auth, _validation.editValidation, _employee["default"].searchEmployee);
+router.route('/search').post(_authentification.auth, _employee["default"].searchEmployee);
 module.exports = router;
