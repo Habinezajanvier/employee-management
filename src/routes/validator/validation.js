@@ -3,7 +3,7 @@ import Joi from '@hapi/joi';
 export const registerValidation = (req, res, next) => {
     const schema = Joi.object({
         employeeName: Joi.string().required(),
-        idNumber: Joi.string().required().min(16).max(16),
+        idNumber: Joi.number().required(),
         email: Joi.string().required().email(),
         password: Joi.string().required(),
         position: Joi.string().required(),
@@ -29,7 +29,7 @@ export const loginValidation = (req, res, next) => {
 export const employeeValidation = (req, res, next) => {
     const schema = Joi.object({
         employeeName: Joi.string().required(),
-        idNumber: Joi.string().required().min(16).max(16),
+        idNumber: Joi.number().required(),
         email: Joi.string().required().email(),
         phoneNumber: Joi.string().min(12).max(13),
         position: Joi.string().required(),

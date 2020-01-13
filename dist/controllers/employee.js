@@ -91,16 +91,26 @@ function () {
                 }));
 
               case 15:
-                _context2.next = 17;
+                if (!(req.body.idNumber.length != 16)) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: 'id Number must 16 character'
+                }));
+
+              case 17:
+                _context2.next = 19;
                 return _employee["default"].findOne({
                   phoneNumber: req.body.phoneNumber
                 });
 
-              case 17:
+              case 19:
                 existed_number = _context2.sent;
 
                 if (!existed_number) {
-                  _context2.next = 20;
+                  _context2.next = 22;
                   break;
                 }
 
@@ -108,7 +118,7 @@ function () {
                   msg: "".concat(req.body.phoneNumber, " already exist, use another")
                 }));
 
-              case 20:
+              case 22:
                 year = parseInt(req.body.year);
                 month = parseInt(req.body.month);
                 date = parseInt(req.body.date); //checking if employee is above 18
@@ -117,7 +127,7 @@ function () {
                 today = d.getFullYear();
 
                 if (!(today - year < 18)) {
-                  _context2.next = 27;
+                  _context2.next = 29;
                   break;
                 }
 
@@ -125,13 +135,13 @@ function () {
                   msg: "".concat(req.body.employeeName, " is below 18")
                 }));
 
-              case 27:
+              case 29:
                 birthDate = "".concat(date, "/ ").concat(month, "/ ").concat(year); //checking if phone number is rwandan
 
                 checkNumber = /^\+250/.test(req.body.phoneNumber);
 
                 if (!(checkNumber != true)) {
-                  _context2.next = 31;
+                  _context2.next = 33;
                   break;
                 }
 
@@ -139,7 +149,7 @@ function () {
                   msg: 'phone number must be a valid rwandan number (starting with +250)'
                 }));
 
-              case 31:
+              case 33:
                 //instantiating mongoose schema for db submission
                 employee = new _employee["default"]({
                   employeeName: req.body.employeeName,
@@ -205,7 +215,7 @@ function () {
                   };
                 }());
 
-              case 34:
+              case 36:
               case "end":
                 return _context2.stop();
             }

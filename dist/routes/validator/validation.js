@@ -12,7 +12,7 @@ var _joi = _interopRequireDefault(require("@hapi/joi"));
 var registerValidation = function registerValidation(req, res, next) {
   var schema = _joi["default"].object({
     employeeName: _joi["default"].string().required(),
-    idNumber: _joi["default"].string().required().min(16).max(16),
+    idNumber: _joi["default"].number().required(),
     email: _joi["default"].string().required().email(),
     password: _joi["default"].string().required(),
     position: _joi["default"].string().required(),
@@ -51,7 +51,7 @@ exports.loginValidation = loginValidation;
 var employeeValidation = function employeeValidation(req, res, next) {
   var schema = _joi["default"].object({
     employeeName: _joi["default"].string().required(),
-    idNumber: _joi["default"].string().required().min(16).max(16),
+    idNumber: _joi["default"].number().required(),
     email: _joi["default"].string().required().email(),
     phoneNumber: _joi["default"].string().min(12).max(13),
     position: _joi["default"].string().required(),

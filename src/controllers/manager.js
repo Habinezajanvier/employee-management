@@ -13,13 +13,15 @@ class ManagerController {
         const exist = await Manager.findOne({employeeName: req.body.employeeName});
         if (exist) return res.json({msg: "you already have an account as manager, login instead"});
 
-        //searchin for a non used id;
+        //searchin for a non used email;
         const email_exist = await Manager.findOne({email: req.body.email});
         if (email_exist) return res.json({msg: "your email already used by onother manager"});
 
         //searching for an identical id_number;
         const id_exist = await Manager.findOne({idNumber: req.body.idNumber});
         if (id_exist) return res.json({msg: "you are using an already used id number"});
+
+        if(req.body.idNumber.length != 16) return res.status(400).json({msg: 'id Number must 16 character'});
 
         //hashing the password;
         const salt = await bcrypt.genSalt(10);

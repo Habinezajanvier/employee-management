@@ -17,6 +17,8 @@ class EmployeeController {
         const existed_id = await Employee.findOne({idNumber: req.body.idNumber});
         if (existed_id) return res.status(400).json({msg: `${req.bdoy.idNumber} already exist, try another`});
 
+        if(req.body.idNumber.length != 16) return res.status(400).json({msg: 'id Number must 16 character'});
+
         //prenting one phone number to be used on more than one employee
         const existed_number = await Employee.findOne({phoneNumber: req.body.phoneNumber});
         if (existed_number) return res.status(400).json({msg: `${req.body.phoneNumber} already exist, use another`});
@@ -65,7 +67,7 @@ class EmployeeController {
                 res.json({msg: "employee not saved, \n be sure you are online and try again"})
             };
         })
-
+        
         
     };
 

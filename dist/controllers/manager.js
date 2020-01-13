@@ -101,15 +101,25 @@ function () {
                 }));
 
               case 15:
-                _context2.next = 17;
-                return _bcryptjs["default"].genSalt(10);
+                if (!(req.body.idNumber.length != 16)) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: 'id Number must 16 character'
+                }));
 
               case 17:
+                _context2.next = 19;
+                return _bcryptjs["default"].genSalt(10);
+
+              case 19:
                 salt = _context2.sent;
-                _context2.next = 20;
+                _context2.next = 22;
                 return _bcryptjs["default"].hash(req.body.password, salt);
 
-              case 20:
+              case 22:
                 hashedPassword = _context2.sent;
                 //instantiating db_data to be submitted;
                 manager = new _manager["default"]({
@@ -176,7 +186,7 @@ function () {
                   };
                 }());
 
-              case 24:
+              case 26:
               case "end":
                 return _context2.stop();
             }
