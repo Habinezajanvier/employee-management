@@ -128,7 +128,6 @@ function () {
                   email: req.body.email,
                   password: hashedPassword,
                   position: req.body.position,
-                  status: req.body.status,
                   birthDate: req.body.birthDate
                 }); //sending email for confirmation
 

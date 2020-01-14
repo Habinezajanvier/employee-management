@@ -7,7 +7,6 @@ export const registerValidation = (req, res, next) => {
         email: Joi.string().required().email(),
         password: Joi.string().required(),
         position: Joi.string().required(),
-        status: Joi.string(),
         birthDate: Joi.string()
     });
 

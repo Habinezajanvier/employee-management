@@ -16,7 +16,6 @@ var registerValidation = function registerValidation(req, res, next) {
     email: _joi["default"].string().required().email(),
     password: _joi["default"].string().required(),
     position: _joi["default"].string().required(),
-    status: _joi["default"].string(),
     birthDate: _joi["default"].string()
   });
 

@@ -39,6 +39,9 @@ class EmployeeController {
         let checkNumber = /^\+250/.test(req.body.phoneNumber);
         if (checkNumber != true ) return res.status(400).json({msg: 'phone number must be a valid rwandan number (starting with +250)'});
 
+        //if our employee status is not active
+        if (req.body.status != "active") return res.status(400).json({msg: "employee to be added, should be active"});
+
         //instantiating mongoose schema for db submission
         const employee = new Employee({
             employeeName: req.body.employeeName,
@@ -125,7 +128,9 @@ class EmployeeController {
         const employee = await Employee.findOne({employeeName: req.params.name});
         if (!employee ) return res.status(400).json({msg: 'employee not exit'});
 
-        if (employee.status == 'active') return res.json({msg: `${employee.employeeName} no need to ativate an active employee`});
+        if (employee.status == 'active') return res.json({msg: `${employee.employeeName} is active, no need to activate an active employee`});
+
+        if (req.body.status != "active") return res.json({msg: "to activate, set status to active"});
 
         try {
             const activated_employee = await Employee.updateOne({employeeName: req.params.name}, {$set: {status: req.body.status}});
@@ -140,7 +145,9 @@ class EmployeeController {
         const employee = await Employee.findOne({employeeName: req.params.name});
         if (!employee ) return res.status(400).json({msg: 'employee not exit'});
 
-        if (employee.status == 'desactive') return res.json({msg: `${employee.employeeName} no need to desativate an desactive employee`});
+        if (employee.status == 'desactive') return res.json({msg: `${employee.employeeName} no need to desativate an inactive employee`});
+
+        if (req.body.status != "inactive") return res.json({msg: 'set status to "inactive" to inactive an employee'});
         
         try {
             const activated_employee = await Employee.updateOne({employeeName: req.params.name}, {$set: {status: req.body.status}});

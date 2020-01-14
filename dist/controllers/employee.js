@@ -150,6 +150,16 @@ function () {
                 }));
 
               case 33:
+                if (!(req.body.status != "active")) {
+                  _context2.next = 35;
+                  break;
+                }
+
+                return _context2.abrupt("return", res.status(400).json({
+                  msg: "employee to be added, should be active"
+                }));
+
+              case 35:
                 //instantiating mongoose schema for db submission
                 employee = new _employee["default"]({
                   employeeName: req.body.employeeName,
@@ -215,7 +225,7 @@ function () {
                   };
                 }());
 
-              case 36:
+              case 38:
               case "end":
                 return _context2.stop();
             }
@@ -430,12 +440,22 @@ function () {
                 }
 
                 return _context5.abrupt("return", res.json({
-                  msg: "".concat(employee.employeeName, " no need to ativate an active employee")
+                  msg: "".concat(employee.employeeName, " is active, no need to activate an active employee")
                 }));
 
               case 7:
-                _context5.prev = 7;
-                _context5.next = 10;
+                if (!(req.body.status != "active")) {
+                  _context5.next = 9;
+                  break;
+                }
+
+                return _context5.abrupt("return", res.json({
+                  msg: "to activate, set status to active"
+                }));
+
+              case 9:
+                _context5.prev = 9;
+                _context5.next = 12;
                 return _employee["default"].updateOne({
                   employeeName: req.params.name
                 }, {
@@ -444,27 +464,27 @@ function () {
                   }
                 });
 
-              case 10:
+              case 12:
                 activated_employee = _context5.sent;
                 res.json({
                   msg: "".concat(req.params.name, " have been activeted successfully")
                 });
-                _context5.next = 17;
+                _context5.next = 19;
                 break;
 
-              case 14:
-                _context5.prev = 14;
-                _context5.t0 = _context5["catch"](7);
+              case 16:
+                _context5.prev = 16;
+                _context5.t0 = _context5["catch"](9);
                 res.status(500).json({
                   msg: 'internal error, please try again later'
                 });
 
-              case 17:
+              case 19:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[7, 14]]);
+        }, _callee5, null, [[9, 16]]);
       }));
 
       function activateEmployee(_x9, _x10) {
@@ -508,12 +528,22 @@ function () {
                 }
 
                 return _context6.abrupt("return", res.json({
-                  msg: "".concat(employee.employeeName, " no need to desativate an desactive employee")
+                  msg: "".concat(employee.employeeName, " no need to desativate an inactive employee")
                 }));
 
               case 7:
-                _context6.prev = 7;
-                _context6.next = 10;
+                if (!(req.body.status != "inactive")) {
+                  _context6.next = 9;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.json({
+                  msg: 'set status to "inactive" to inactive an employee'
+                }));
+
+              case 9:
+                _context6.prev = 9;
+                _context6.next = 12;
                 return _employee["default"].updateOne({
                   employeeName: req.params.name
                 }, {
@@ -522,27 +552,27 @@ function () {
                   }
                 });
 
-              case 10:
+              case 12:
                 activated_employee = _context6.sent;
                 res.json({
                   msg: "".concat(req.params.name, " have been desactiveted successfully")
                 });
-                _context6.next = 17;
+                _context6.next = 19;
                 break;
 
-              case 14:
-                _context6.prev = 14;
-                _context6.t0 = _context6["catch"](7);
+              case 16:
+                _context6.prev = 16;
+                _context6.t0 = _context6["catch"](9);
                 res.status(500).json({
                   msg: 'internal error, please try again later'
                 });
 
-              case 17:
+              case 19:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, null, [[7, 14]]);
+        }, _callee6, null, [[9, 16]]);
       }));
 
       function suspendEmployee(_x11, _x12) {

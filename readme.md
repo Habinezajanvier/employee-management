@@ -28,7 +28,7 @@ this application require basic knowledge on javascript, nodejs with express and 
 ### using postman
 
 - open postman
-- using url of **Route/register**, using post method create a manager account
+- using url of **Route/register**, using *post* method create a manager account
 - data to be submitted should be
 
 ```javascript
@@ -38,13 +38,12 @@ this application require basic knowledge on javascript, nodejs with express and 
     email: valid_email,
     password: Password,
     position: position,
-    status: status,
     birthDate: birthDate
 }
 ```
-- using url of **Route/login**, using post method login as manager to get jwt token
-- to add an employee, on **Route/employees** , 
-  - using post request, set a header called `authentication` and use the given token as its `key-value`
+- using url of **Route/login**, using *post* method login as manager to get jwt token
+- to **add** an employee, on **Route/employees** , 
+  - using *post* request, set a header called `authentication` and use the given token as its `key-value`
   - in the body these data should be filled
 
 ```javascript
@@ -53,28 +52,30 @@ this application require basic knowledge on javascript, nodejs with express and 
     idNumber: national_idNumber,
     phoneNumber: rwandan_phoneNumber,
     email: valid_email,
-    status: status,
-    birthDate: birthDate,
-    position: position
+    status: status, //it should be 'active'
+    date: date // number of the date of bith
+    month: month // number of month employee born in
+    year: year // year of birth of employee
+    position: position //position of employee in company
 }
 ```
 
-- to delete an employee, on **Route/employees/{employeeName}** use delete method
-- to edit an employee, on **Route/employees/{employeeName}**  use put method and the field to be updated,
-- to activate employee, on **Route/employees/{employeeName}/activate**, on the body set the status to active; 
+- to **delete** an employee, on **Route/employees/{employeeName}** use *delete* method
+- to **edit** an employee, on **Route/employees/{employeeName}**  use *put* method and the field to be updated,
+- to **activate** employee, on **Route/employees/{employeeName}/activate**, on the body set the status to active; use *put* request 
 
 ```json
 {"status": "active"},
 ```
 
-- to suspend/ desactivate, on **Route/employees{employeeName}/suspend**, on the body set the status to desactive; 
+- to **suspend/ inactivate**, on **Route/employees{employeeName}/suspend**, on the body set the status to inactive; use *put* request 
 
 ```json
 {"status": "desactive"},
 ```
 
 - your can be able to search employee using *employeeName* *employee_phoneNumber* *employee_email* or *employee_position* to do so: 
-  - on **route/employees/search** use a fied you want in the body; 
+  - on **route/employees/search** use a field you want in the body; the request is *post* 
 
 ```json
 {"field":"field"}

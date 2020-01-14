@@ -26,7 +26,6 @@ const managerShcema = mongoose.Schema({
     status:{
         type: String,
         default: 'active',
-        required: true
     },
     position: {
         type: String,
