@@ -71,7 +71,7 @@ this application require basic knowledge on javascript, nodejs with express and 
 - to **suspend/ inactivate**, on **Route/employees{employeeName}/suspend**, on the body set the status to inactive; use *put* request 
 
 ```json
-{"status": "desactive"},
+{"status": "inactive"},
 ```
 
 - your can be able to search employee using *employeeName* *employee_phoneNumber* *employee_email* or *employee_position* to do so: 
