@@ -1,5 +1,4 @@
 import Employee from '../../models/employee';
-import transporter from '../mailer/mailer';
 
 class EmployeeController {
     static async addEmployee (req, res) {
@@ -39,16 +38,12 @@ class EmployeeController {
         let checkNumber = /^\+250/.test(req.body.phoneNumber);
         if (checkNumber != true ) return res.status(400).json({msg: 'phone number must be a valid rwandan number (starting with +250)'});
 
-        //if our employee status is not active
-        if (req.body.status != "active") return res.status(400).json({msg: "employee to be added, should be active"});
-
         //instantiating mongoose schema for db submission
         const employee = new Employee({
             employeeName: req.body.employeeName,
             idNumber: req.body.idNumber,
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
-            status: req.body.status,
             birthDate: birthDate,
             position: req.body.position
         });

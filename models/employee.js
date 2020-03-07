@@ -19,6 +19,7 @@ const employeeShcema = mongoose.Schema({
     },
     status: {
         type: Boolean,
+        default: false,
     },
     birthDate: {
         type: String,

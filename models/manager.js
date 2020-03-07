@@ -8,8 +8,9 @@ const managerShcema = mongoose.Schema({
     idNumber: {
         type: String,
         required: true,
-        max: 16,
-        min: 16
+        maxLength: 16,
+        minLength: 16,
+        unique: true
     },
     email: {
         type: String,
@@ -24,8 +25,8 @@ const managerShcema = mongoose.Schema({
         required: true
     },
     status:{
-        type: String,
-        default: 'active',
+        type: Boolean,
+        default: true,
     },
     position: {
         type: String,

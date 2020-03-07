@@ -1,10 +1,7 @@
 import bcrypt from 'bcryptjs';
 import Manager from '../../models/manager'
 import jwt from 'jsonwebtoken';
-import mailer from 'nodemailer';
-import smtpTransport from 'nodemailer-smtp-transport';
-import transporter from '../mailer/mailer';
-import dotenv from 'dotenv';
+
 
 class ManagerController {
     static async register(req, res) {
