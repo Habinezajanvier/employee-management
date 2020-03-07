@@ -2,11 +2,14 @@
   "name": "employee_mgt",
   "version": "1.0.0",
   "description": "application to manage employee in company",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "build": ".\\node_modules\\.bin\\babel src --out-dir dist",
     "start": "node dist/app.js",
     "dev": "nodemon dist/app.js"
+  },
+  "engines": {
+    "node": "12.13.1"
   },
   "keywords": [],
   "author": "Habineza janvier",
