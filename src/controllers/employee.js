@@ -53,25 +53,12 @@ class EmployeeController {
             position: req.body.position
         });
 
-        const mailOption = {
-            from: '"COMPANY X" <habinezajan@gmail.com>',
-            to: req.body.email,
-            subject: "notification email",
-            text: 'this an email to notify about your employement',
-            html: `<h1>notification email<h1><p>Dear ${req.body.employeeName} this is to tell you that you were employed in our company`
+        try {
+            const saved_employee = await employee.save();
+            res.json({msg: `${req.body.employeeName} has been successfully added`});
+        } catch (error) {
+            res.json({msg: "employee not saved, \n be sure you are online and try again"})
         };
-        transporter.sendMail(mailOption, async (err, info)=>{
-            if (err) res.json(err);
-    
-            try {
-                const saved_employee = await employee.save();
-                res.json({msg: `${req.body.employeeName} has been successfully added`});
-            } catch (error) {
-                res.json({msg: "employee not saved, \n be sure you are online and try again"})
-            };
-        })
-        
-        
     };
 
     static async deleteEmployee (req, res) {
@@ -128,10 +115,6 @@ class EmployeeController {
         const employee = await Employee.findOne({employeeName: req.params.name});
         if (!employee ) return res.status(400).json({msg: 'employee not exit'});
 
-        if (employee.status == 'active') return res.json({msg: `${employee.employeeName} is active, no need to activate an active employee`});
-
-        if (req.body.status != "active") return res.json({msg: "to activate, set status to active"});
-
         try {
             const activated_employee = await Employee.updateOne({employeeName: req.params.name}, {$set: {status: req.body.status}});
             res.json({msg: `${req.params.name} have been activeted successfully`})
@@ -144,10 +127,6 @@ class EmployeeController {
 
         const employee = await Employee.findOne({employeeName: req.params.name});
         if (!employee ) return res.status(400).json({msg: 'employee not exit'});
-
-        if (employee.status == 'desactive') return res.json({msg: `${employee.employeeName} no need to desativate an inactive employee`});
-
-        if (req.body.status != "inactive") return res.json({msg: 'set status to "inactive" to inactive an employee'});
         
         try {
             const activated_employee = await Employee.updateOne({employeeName: req.params.name}, {$set: {status: req.body.status}});

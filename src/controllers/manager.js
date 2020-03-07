@@ -36,25 +36,14 @@ class ManagerController {
             position: req.body.position,
             birthDate: req.body.birthDate
         });
-
-        //sending email for confirmation
-        
-        const mailOption = {
-            from: '"COMPANY X" <habinezajan@gmail.com>',
-            to: req.body.email,
-            subject: "registration verification",
-            text: 'here is the email to verify your registration',
-        };
-        transporter.sendMail(mailOption, async (err, info)=>{
-            if (err) res.json(err)
     
-            try {
-                const saved_data = await manager.save();
-                res.json({msg: 'you are successfully registered as manager'});
-            } catch (error) {
-                res.status(500).json({msg: 'internal error, try again later'})
-            };
-        });
+        try {
+            const saved_data = await manager.save();
+            res.json({msg: 'you are successfully registered as manager'});
+        } catch (error) {
+            res.status(500).json({msg: 'internal error, try again later'})
+        };
+        
     };
     static async login(req, res){
 

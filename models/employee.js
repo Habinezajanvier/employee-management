@@ -18,9 +18,7 @@ const employeeShcema = mongoose.Schema({
         required: true
     },
     status: {
-        type: String,
-        default: "active",
-        required: true
+        type: Boolean,
     },
     birthDate: {
         type: String,
