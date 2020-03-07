@@ -54,7 +54,6 @@ var employeeValidation = function employeeValidation(req, res, next) {
     email: _joi["default"].string().required().email(),
     phoneNumber: _joi["default"].string().min(12).max(13),
     position: _joi["default"].string().required(),
-    status: _joi["default"].string(),
     date: _joi["default"].string().required(),
     month: _joi["default"].string().required(),
     year: _joi["default"].string().required()

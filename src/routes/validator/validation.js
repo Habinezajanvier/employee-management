@@ -32,7 +32,6 @@ export const employeeValidation = (req, res, next) => {
         email: Joi.string().required().email(),
         phoneNumber: Joi.string().min(12).max(13),
         position: Joi.string().required(),
-        status: Joi.string(),
         date: Joi.string().required(),
         month: Joi.string().required(),
         year: Joi.string().required()
