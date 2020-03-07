@@ -21,14 +21,6 @@ var _manager = _interopRequireDefault(require("../../models/manager"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
-var _nodemailer = _interopRequireDefault(require("nodemailer"));
-
-var _nodemailerSmtpTransport = _interopRequireDefault(require("nodemailer-smtp-transport"));
-
-var _mailer = _interopRequireDefault(require("../mailer/mailer"));
-
-var _dotenv = _interopRequireDefault(require("dotenv"));
-
 var ManagerController =
 /*#__PURE__*/
 function () {

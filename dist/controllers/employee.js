@@ -17,8 +17,6 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 var _employee = _interopRequireDefault(require("../../models/employee"));
 
-var _mailer = _interopRequireDefault(require("../mailer/mailer"));
-
 var EmployeeController =
 /*#__PURE__*/
 function () {
@@ -150,54 +148,43 @@ function () {
                 }));
 
               case 33:
-                if (!(req.body.status != "active")) {
-                  _context.next = 35;
-                  break;
-                }
-
-                return _context.abrupt("return", res.status(400).json({
-                  msg: "employee to be added, should be active"
-                }));
-
-              case 35:
                 //instantiating mongoose schema for db submission
                 employee = new _employee["default"]({
                   employeeName: req.body.employeeName,
                   idNumber: req.body.idNumber,
                   phoneNumber: req.body.phoneNumber,
                   email: req.body.email,
-                  status: req.body.status,
                   birthDate: birthDate,
                   position: req.body.position
                 });
-                _context.prev = 36;
-                _context.next = 39;
+                _context.prev = 34;
+                _context.next = 37;
                 return employee.save();
 
-              case 39:
+              case 37:
                 saved_employee = _context.sent;
                 res.json({
                   msg: "".concat(req.body.employeeName, " has been successfully added")
                 });
-                _context.next = 46;
+                _context.next = 44;
                 break;
 
-              case 43:
-                _context.prev = 43;
-                _context.t0 = _context["catch"](36);
+              case 41:
+                _context.prev = 41;
+                _context.t0 = _context["catch"](34);
                 res.json({
                   msg: "employee not saved, \n be sure you are online and try again"
                 });
 
-              case 46:
+              case 44:
                 ;
 
-              case 47:
+              case 45:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[36, 43]]);
+        }, _callee, null, [[34, 41]]);
       }));
 
       function addEmployee(_x, _x2) {
