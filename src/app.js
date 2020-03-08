@@ -2,12 +2,14 @@ import  express from 'express';
 import mongoose from 'mongoose';
 import managerRoute from './routes/manager.route';
 import employeeRoute from './routes/employee.route';
+import cors from 'cors';
 
 require('dotenv').config();
 
 const app = express();
 
 //middlewares
+app.use(cors());
 app.use(express.json());
 app.use('/company', managerRoute);
 app.use('/company/employees', employeeRoute);
