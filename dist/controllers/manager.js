@@ -34,14 +34,14 @@ function () {
       var _register = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee(req, res) {
-        var exist, email_exist, id_exist, salt, hashedPassword, manager, saved_data;
+        var exist, id_exist, salt, hashedPassword, manager, saved_data;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
                 return _manager["default"].findOne({
-                  employeeName: req.body.employeeName
+                  email: req.body.email
                 });
 
               case 2:
@@ -53,65 +53,47 @@ function () {
                 }
 
                 return _context.abrupt("return", res.json({
-                  msg: "you already have an account as manager, login instead"
+                  error: 'You already have an account as manager, login instead'
                 }));
 
               case 5:
                 _context.next = 7;
                 return _manager["default"].findOne({
-                  email: req.body.email
+                  idNumber: req.body.idNumber
                 });
 
               case 7:
-                email_exist = _context.sent;
+                id_exist = _context.sent;
 
-                if (!email_exist) {
+                if (!id_exist) {
                   _context.next = 10;
                   break;
                 }
 
                 return _context.abrupt("return", res.json({
-                  msg: "your email already used by onother manager"
+                  error: 'You are using an already used ID number'
                 }));
 
               case 10:
-                _context.next = 12;
-                return _manager["default"].findOne({
-                  idNumber: req.body.idNumber
-                });
-
-              case 12:
-                id_exist = _context.sent;
-
-                if (!id_exist) {
-                  _context.next = 15;
-                  break;
-                }
-
-                return _context.abrupt("return", res.json({
-                  msg: "you are using an already used id number"
-                }));
-
-              case 15:
                 if (!(req.body.idNumber.length != 16)) {
-                  _context.next = 17;
+                  _context.next = 12;
                   break;
                 }
 
                 return _context.abrupt("return", res.status(400).json({
-                  msg: 'id Number must 16 character'
+                  error: 'ID Number must 16 character'
                 }));
 
-              case 17:
-                _context.next = 19;
+              case 12:
+                _context.next = 14;
                 return _bcryptjs["default"].genSalt(10);
 
-              case 19:
+              case 14:
                 salt = _context.sent;
-                _context.next = 22;
+                _context.next = 17;
                 return _bcryptjs["default"].hash(req.body.password, salt);
 
-              case 22:
+              case 17:
                 hashedPassword = _context.sent;
                 //instantiating db_data to be submitted;
                 manager = new _manager["default"]({
@@ -122,34 +104,31 @@ function () {
                   position: req.body.position,
                   birthDate: req.body.birthDate
                 });
-                _context.prev = 24;
-                _context.next = 27;
+                _context.prev = 19;
+                _context.next = 22;
                 return manager.save();
 
-              case 27:
+              case 22:
                 saved_data = _context.sent;
                 res.json({
-                  msg: 'you are successfully registered as manager'
+                  msg: 'You are successfully registered as manager'
                 });
-                _context.next = 34;
+                _context.next = 29;
                 break;
 
-              case 31:
-                _context.prev = 31;
-                _context.t0 = _context["catch"](24);
+              case 26:
+                _context.prev = 26;
+                _context.t0 = _context["catch"](19);
                 res.status(500).json({
-                  msg: 'internal error, try again later'
+                  error: 'Internal error, try again later'
                 });
 
-              case 34:
-                ;
-
-              case 35:
+              case 29:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[24, 31]]);
+        }, _callee, null, [[19, 26]]);
       }));
 
       function register(_x, _x2) {
@@ -171,7 +150,7 @@ function () {
               case 0:
                 _context2.next = 2;
                 return _manager["default"].findOne({
-                  employeeName: req.body.employeeName
+                  email: req.body.email
                 });
 
               case 2:
@@ -183,7 +162,7 @@ function () {
                 }
 
                 return _context2.abrupt("return", res.json({
-                  msg: "first register as manager to continue"
+                  msg: 'First register as manager to continue'
                 }));
 
               case 5:
@@ -199,7 +178,7 @@ function () {
                 }
 
                 return _context2.abrupt("return", res.json({
-                  msg: "your password is not correct"
+                  msg: 'Your password is incorrect'
                 }));
 
               case 10:
@@ -208,14 +187,14 @@ function () {
                   token = _jsonwebtoken["default"].sign({
                     _id: manager._id
                   }, secretKey, {
-                    algorithm: "HS256"
+                    algorithm: 'HS256'
                   });
-                  res.header("authentication", token).json({
+                  res.header('authentication', token).json({
                     token: token
                   });
                 } catch (error) {
                   res.json({
-                    msg: "internal error, please try again"
+                    msg: 'Internal error, please try again'
                   });
                 }
 

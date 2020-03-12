@@ -17,4 +17,5 @@ router.route('/:name').put(_authentification.auth, _validation.editValidation, _
 router.route('/:name/activate').put(_authentification.auth, _employee["default"].activateEmployee);
 router.route('/:name/suspend').put(_authentification.auth, _employee["default"].suspendEmployee);
 router.route('/search').post(_authentification.auth, _employee["default"].searchEmployee);
+router.route('/all').get(_authentification.auth, _employee["default"].allEmployee);
 module.exports = router;

@@ -558,6 +558,64 @@ function () {
 
       return searchEmployee;
     }()
+  }, {
+    key: "allEmployee",
+    value: function () {
+      var _allEmployee = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee7(req, res) {
+        var employees;
+        return _regenerator["default"].wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.prev = 0;
+                _context7.next = 3;
+                return _employee["default"].find().select({
+                  status: 0,
+                  _id: 0,
+                  date: 0,
+                  __v: 0
+                });
+
+              case 3:
+                employees = _context7.sent;
+
+                if (employees) {
+                  _context7.next = 6;
+                  break;
+                }
+
+                return _context7.abrupt("return", res.json({
+                  msg: 'no employee start adding'
+                }));
+
+              case 6:
+                res.json(employees);
+                _context7.next = 12;
+                break;
+
+              case 9:
+                _context7.prev = 9;
+                _context7.t0 = _context7["catch"](0);
+                res.status(500).json({
+                  msg: 'internal error, try again later'
+                });
+
+              case 12:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[0, 9]]);
+      }));
+
+      function allEmployee(_x13, _x14) {
+        return _allEmployee.apply(this, arguments);
+      }
+
+      return allEmployee;
+    }()
   }]);
   return EmployeeController;
 }();

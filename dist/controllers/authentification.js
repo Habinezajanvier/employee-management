@@ -15,6 +15,8 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
+_dotenv["default"].config();
+
 var auth =
 /*#__PURE__*/
 function () {
@@ -38,7 +40,7 @@ function () {
             }
 
             return _context.abrupt("return", res.status(401).json({
-              msg: "Access denied"
+              msg: 'Access denied'
             }));
 
           case 5:
@@ -57,7 +59,7 @@ function () {
             _context.prev = 13;
             _context.t0 = _context["catch"](5);
             res.status(400).json({
-              msg: "invalid token"
+              msg: 'invalid token'
             });
 
           case 16:

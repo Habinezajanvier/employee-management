@@ -32,7 +32,7 @@ exports.registerValidation = registerValidation;
 
 var loginValidation = function loginValidation(req, res, next) {
   var schema = _joi["default"].object({
-    employeeName: _joi["default"].string().required(),
+    email: _joi["default"].string().required(),
     password: _joi["default"].string().required()
   });
 
