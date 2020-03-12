@@ -25,6 +25,7 @@ var port = process.env.PORT || 3000; //connecting to mongodb data base;
 _mongoose["default"].connect(process.env.DB_CONNECT, {
   useNewUrlParser: true,
   useFindAndModify: false,
+  useCreateIndex: true,
   useUnifiedTopology: true
 }, function () {
   return console.log('connected to database');

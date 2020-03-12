@@ -134,10 +134,10 @@ class EmployeeController {
     static async searchEmployee (req, res) {
         try {
             const searched_employee = await Employee.find({
-                $or:[{employeeName: req.body.employeeName}, 
-                    {position: req.body.position},
-                    {phoneNumber: req.body.phoneNumber},
-                    {email: req.body.email}
+                $or:[{employeeName: req.body.field}, 
+                    {position: req.body.field},
+                    {phoneNumber: req.body.field},
+                    {email: req.body.field}
                 ]});
             
             if (!searched_employee) return res.status(404).json({msg: 'your search not found '});

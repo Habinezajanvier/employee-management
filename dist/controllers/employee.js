@@ -510,13 +510,13 @@ function () {
                 _context6.next = 3;
                 return _employee["default"].find({
                   $or: [{
-                    employeeName: req.body.employeeName
+                    employeeName: req.body.field
                   }, {
-                    position: req.body.position
+                    position: req.body.field
                   }, {
-                    phoneNumber: req.body.phoneNumber
+                    phoneNumber: req.body.field
                   }, {
-                    email: req.body.email
+                    email: req.body.field
                   }]
                 });
 
